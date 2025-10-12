@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: always
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: aiuser
+      POSTGRES_PASSWORD: aisecret
+      POSTGRES_DB: aidevops
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+  app:
+    build: .
+    container_name: devops-ai-reviewer
+    depends_on:
+      - ollama
+      - postgres
+    environment:
+      OLLAMA_URL: http://ollama:11434/api/generate
+    ports:
+      - "8501:8501"
+    restart: always
+
+volumes:
+  ollama_models:
+  pgdata:

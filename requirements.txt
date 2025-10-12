@@ -1,0 +1,4 @@
+streamlit
+requests
+PyGithub
+psycopg2-binary
