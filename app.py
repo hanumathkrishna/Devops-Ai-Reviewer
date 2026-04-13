@@ -109,3 +109,5 @@ if st.button("🔍 Analyze Code"):
         st.success("Saved to PostgreSQL ✅")
     except Exception as e:
         st.error(f"Ollama error: {e}")
+
+
